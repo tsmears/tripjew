@@ -9,10 +9,9 @@
 
 <% @trips.each do |trip| %>
   <tr>
-    <td><%= trip.name %></td>
+    <td><%= link_to trip.name, trip %></td>
     <td><%= trip.users.map(&:name).join(", ") %></td>
     <td><%= trip.total_spent %></td>
-    <td><%= link_to 'Show', trip %></td>
     <td><%= link_to 'Edit', edit_trip_path(trip) %></td>
     <td><%= link_to 'Destroy', trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
@@ -24,3 +23,5 @@
 <button type ="button" class="btn btn-primary">
   <%= link_to 'New Trip', new_trip_path %>
 </button>
+
+  

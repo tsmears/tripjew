@@ -10,14 +10,58 @@
   <%= @trip.users.map(&:name).join(", ") %>
 </p>
 
-<p>
-  <b>Total Spent:</b>
-  <%= @trip.total_spent %>
-</p>
+<table class="table table-bordered table-hover">
+	<tr>
+		<th> Name of Expense </th>
+		<th> Price of Expense </th>
+		<th> Payer </th>
+	</tr>	
+
+
+<% @trip.expenses.each do |expense| %>
+	<tr>
+		<td> <%= expense.name %> </td>
+		<td> <%= expense.price %> </td>
+		<td> <%=
+			if u = expense.user
+				u.name
+			else
+				"none"
+			end 
+			%> 
+		</td>
+	</tr>	
+<% end %>
+
+</table>
+
+
+
+<table class="table table-bordered table-hover">
+	<tr>
+		<th> Payer </th>
+		<th> Total Amount Paid </th>
+	</tr>
+
+	<% @trip.users.each do |user| %>
+		<tr>
+			<td> <%= user.name %> </td>
+			<td> <%= user.total_expense %> </td>
+			
+		</tr>
+	<% end %>
+
+	<tr>
+		<td> <strong> Total Spent: </strong> </td>
+		<td> <strong> <%= @trip.total_spent %> </strong> </td>
+	</tr>
+</table>
+
+
 
 <p>
 	<button type ="button" class="btn btn-primary">
-  		<%= link_to 'New Expense', new_expense_path %>
+  		<%= link_to 'New Expense', new_trip_expense_path(@trip) %>
 	</button>
 </p>
 

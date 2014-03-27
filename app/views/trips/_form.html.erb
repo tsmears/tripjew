@@ -14,5 +14,10 @@
 
   <%= f.input :name, label: 'Your trip name please' %>
   <%= f.association :users, as: :check_boxes %>
+  <p>
+  <button type ="button" class="btn btn-primary">
+      <%= link_to 'New Participant', new_user_path %>
+  </button>
+</p>
   <%= f.submit %>
 <% end %>

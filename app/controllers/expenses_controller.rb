@@ -1,4 +1,6 @@
 class ExpensesController < ApplicationController
+  
+  before_filter :find_trip
   # GET /expenses
   # GET /expenses.json
   def index
@@ -30,6 +32,9 @@ class ExpensesController < ApplicationController
       format.html # new.html.erb
       format.json { render json: @expense }
     end
+
+    @trip = Trip.find(params[:trip_id]) 
+
   end
 
   # GET /expenses/1/edit
@@ -40,11 +45,13 @@ class ExpensesController < ApplicationController
   # POST /expenses
   # POST /expenses.json
   def create
-    @expense = Expense.new(params[:expense])
+    @expense = @trip.expenses.new(params[:expense])
 
     respond_to do |format|
       if @expense.save
-        format.html { redirect_to @expense, notice: 'Expense was successfully created.' }
+        @trip.increment!(:total_spent, @expense.price)
+
+        format.html { redirect_to [@trip], notice: 'Expense was successfully created.' }
         format.json { render json: @expense, status: :created, location: @expense }
       else
         format.html { render action: "new" }
@@ -79,5 +86,12 @@ class ExpensesController < ApplicationController
       format.html { redirect_to expenses_url }
       format.json { head :no_content }
     end
+  end
+
+
+  private
+
+  def find_trip
+    @trip = Trip.find(params[:trip_id])
   end
 end

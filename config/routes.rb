@@ -1,7 +1,9 @@
 Tripjew::Application.routes.draw do
-  resources :expenses
+  
 
-  resources :trips
+  resources :trips do
+    resources :expenses
+  end
 
   resources :users
 
